@@ -1,0 +1,347 @@
+# `RGBMatrixEmulator`
+
+[![pypi Badge](https://img.shields.io/pypi/v/RGBMatrixEmulator)](https://pypi.org/project/RGBMatrixEmulator/)
+
+<a href="assets/hello-world.gif">
+  <img src="assets/hello-world.gif" height="200"/>
+</a>
+
+`RGBMatrixEmulator` is a Python package for emulating RGB LED matrices that are normally driven by the [rpi-rgb-led-matrix library](https://github.com/hzeller/rpi-rgb-led-matrix). Most commonly, these are used with single-board computers such as the Raspberry Pi.
+
+`RGBMatrixEmulator` (currently) supports a subset of the function calls present in the [Python bindings for rpi-rgb-led-matrix](https://github.com/hzeller/rpi-rgb-led-matrix/tree/master/bindings/python). As such, it's accuracy is not 100% guaranteed.
+
+## Installation
+
+`RGBMatrixEmulator` is in the [Python Package Index (PyPI)](http://pypi.python.org/pypi/RGBMatrixEmulator/). Installing with `pip` is recommended for all systems.
+
+```sh
+pip install RGBMatrixEmulator
+```
+
+The base installation includes the following display adapters:
+
+* `browser` (default)
+* `terminal`
+* `tkinter`
+* `turtle`
+* `raw`
+
+For more information on display adapters, see the [Display Adapters](#display-adapters) section.
+
+### Optional Adapters
+
+The following adapters are supported but not installed by default.
+
+* `sixel`
+* `pygame`
+
+You can install optional adapters via `pip`:
+
+```sh
+pip install RGBMatrixEmulator[sixel]
+pip install RGBMatrixEmulator[pygame]
+
+# All optional adapters at once
+pip install RGBMatrixEmulator[sixel,pygame]
+```
+
+### `pygame` Adapter
+
+The upstream [pygame](https://github.com/pygame/pygame) package does not support Python 3.14 or greater. The adapter has been swapped to use the [pygame-ce](https://github.com/pygame-community/pygame-ce) package instead. This should be a backwards compatible change with no noticeable issues.
+
+If you need to use the legacy `pygame` package for any reason, you can install it:
+
+```sh
+pip install RGBMatrixEmulator[pygame-legacy]
+```
+
+## Usage
+
+Projects that are able to be emulated will rely on importing classes from `rpi-rgb-led-matrix`. These will need to be replaced by equivalent `RGBMatrixEmulator` classes.
+
+For example, usage on a Rasberry Pi might look like this:
+
+```python
+from rgbmatrix import RGBMatrix, RGBMatrixOptions
+```
+
+The emulated version will need to use `RGBMatrixEmulator` classes:
+
+```python
+from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions
+```
+
+After this, most of the existing command line arguments from the `rpi-rgb-led-matrix` library still apply. You should reference the [project README](https://github.com/hzeller/rpi-rgb-led-matrix/blob/master/README.md) for that library when necessary.
+
+Startup of the existing script will be unchanged.
+
+## Multi-Panel Emulation
+
+Emulated multi-panel chaining is supported via `rpi-rgb-led-matrix` CLI flags such as `--led-chain`, `--led-parallel`, `--led-pixel-mappers`. RGBME makes the assumption that the desired orientation for a multi-panel arrangement is a rectangular, upright array of panels.
+
+### `--led-chain` / `--led-parallel`
+
+Single-panel emulation creates an emulated matrix size of `--led-cols` (width) x `--led-rows` (height). For instance, the following command creates a 64x32 emulated matrix.
+
+```sh
+python main.py --led-cols 64 --led-rows 32
+```
+
+`--led-chain` can be thought of as the number of panels chained horizontally, and `--led-parallel` is the number of parallel chains. This also assumes the chains contain the same number of panels. Thus, these flags create a  `--led-cols` x `--led-chain` wide by `--led-rows` x `--led-parallel` high. The following example creates a 128x64 emulated matrix.
+
+```sh
+python main.py --led-cols 64 --led-rows 32 --led-chain 2 --led-parallel 2
+```
+
+### `--led-pixel-mapper`
+
+> [!TIP]  
+> Contributions welcome to support more complex mapper behavior!
+
+RGBME assumes that the user wants to simulate a physical arrangement of panels such that the image appears continuous and upright. This differs a bit from how `rpi-rgb-led-matrix` treats chains and pixel mappers, which describe the wiring arrangement of the panels and the physical arrangement of panels is not specified.
+
+RGBME does **NOT** support pixel mapper chaining:
+
+```sh
+# More than one pixel mapper, V-mapper:Z chained into Rotate:90
+# RGBME will use the first detected mapper.
+python main.py --led-chain 2 --led-parallel 2 --led-pixel-mapper "V-mapper:Z;Rotate:90"
+
+# Valid
+python main.py --led-chain 2 --led-parallel 2 --led-pixel-mapper "V-mapper:Z"
+python main.py --led-chain 2 --led-parallel 2 --led-pixel-mapper "Rotate:90"
+```
+
+Instead, RGBME can use a single pixel mapper to alter the emulated dimensions or perform affine transformations over the entire emulated matrix.
+
+| Mapper | Parameter | Description |
+| --- | --- | --- |
+| `V-mapper` | `Z` (optional) for zig-zag wiring | Folds a horizontal chain into vertical panel stacks. Changes the dimensions to `(W·parallel/chain) × (H·chain/parallel)`.  |
+| `U-mapper` | | Folds a long chain back on itself into a U, halving the width and doubling the height (`W/2 × H·2`). Requires an even chain of at least 2 panels. |
+| `StackToRow` | | Lays parallel chains end-to-end into one wide horizontal row, reshaping the dimensions to `(W·parallel) × (H/parallel)`. |
+| `Rotate` | Angle in degrees, a multiple of 90 (e.g. `90`) | Rotates the displayed image by the given angle. At 90° or 270° the width and height are swapped. |
+| `Mirror` | `H` (default) or `V` | Mirrors the display left/right (`H`) or top/bottom (`V`). Preserves dimensions. |
+
+## Customization
+
+### Generating a Configuration File
+
+The first time you run a script with the emulator enabled, a file called `emulator_config.json` will be created in the script's directory.
+
+Alternatively, you can use the `rgbme` command to generate a new configuration on-demand:
+
+```sh
+rgbme config
+```
+
+The config file enables configurations to be customized on a per-script basis. You can delete and re-generate this file at any time.
+
+### Default Configuration
+
+```json
+{
+  "pixel_outline": 0,
+  "pixel_size": 16,
+  "pixel_style": "square",
+  "pixel_glow": 6,
+  "display_adapter": "browser",
+  "allow_adapter_fallback": true,
+  "icon_path": null,
+  "emulator_title": null,
+  "browser": {
+    "_comment": "For use with the browser adapter only.",
+    "port": 8888,
+    "target_fps": 60,
+    "fps_display": false,
+    "quality": 70,
+    "image_border": true,
+    "debug_text": false,
+    "image_format": "JPEG",
+    "open_immediately": false
+  },
+  "log_level": "info"
+}
+```
+
+### JSON Configuration Options
+
+#### Global Options
+
+The following configuration affects most display adapters or emulation as a whole.
+
+| Key | Type | Description |
+| --- | ---- | ----------- |
+| pixel_outline                | Integer | Size of the black border around each pixel. Only works on some adapters; others will ignore this configuration.
+| pixel_size                   | Integer | Size of the emulated LED. Helpful for emulating large matrices on small screens. Actual window size is the matrix size scaled by pixel size.
+| pixel_style                  | String  | Style of the emulated LED. Supported pixel styles are "square", "circle", and "real". Some display adapters do not support all options and will revert to a supported style.
+| pixel_glow                   | Integer | Amount of glow to add to pixels. Currently only supported by "real" pixel style. Must be an integer >= 0.
+| display_adapter              | String  | Display adapter for the emulator. See Display Adapters section for details.
+| allow_adapter_fallback       | Boolean | Whether to continue to the next available adapter if the preferred adapter fails to load. Only fails if all adapters fail to load.
+| icon_path                    | Path    | Relative path to a custom icon file (PNG, ICO, JPG/JPEG, etc.). If not set, the emulator window uses the default RGBME icon.
+| emulator_title               | String  | Custom title to display at the top of the emulator window. If not set, RGBME uses default debug text.
+| log_level                    | String  | Logging level for the emulator.
+
+Altering the `pixel_size` configuration will change how large the LEDs appear on your screen. This is helpful for emulating large matrices or on small screens.
+
+You can also change the `pixel_style` option. By default, the emulator represents LEDs as squares. If you prefer the LEDs to have a more rounded appearance, you can change to `circle`. For simulating a real panel with LED "glow", the `real` style can be used.
+
+#### Adapter-Specific Options
+
+Certain adapters may specify additional configurations. These specialized configuration options do not affect other adapters.
+
+##### `browser` Options
+
+| Key | Type | Description |
+| --- | ---- | ----------- |
+| browser.port             | Integer | Port for the rendering server to attach to. Example: http://localhost:8888
+| browser.target_fps       | Integer | Target frames per second. Higher values may lead to lower performance.
+| browser.fps_display      | Bool    | Display the FPS.
+| browser.quality          | Integer | Value from 0 - 100 indicating the quality percentage for the rendered image. Higher values may lead to lower performance.
+| browser.image_border     | Bool    | Display a slight border around the rendered image.
+| browser.debug_text       | Bool    | Display debug text.
+| browser.image_format     | String  | Image format to use for rendering. Options are "JPEG" or "PNG".
+| browser.open_immediately | Bool    | Open a new browser window immediately on startup (similar to other adapters).
+
+### Display Adapters
+
+By default, `RGBMatrixEmulator` uses `browser` as its display adapter for maximum compatibility with different operating systems as well as thread-safety. However, you can also use other display adapters as well if the default adapter does not suit your needs.
+
+Currently supported display adapters are:
+
+* `browser` (default)
+* `pygame`
+* `terminal`
+* `tkinter`
+* `turtle`
+* `sixel`
+* `raw`
+
+You can swap display adapters by changing the `display_adapter` value to one of the above in `emulator_config.json`.
+
+**Note:** Not all display adapters support all emulator features. Some adapters may require additional setup steps to install. For example, on OSX, it may be necessary to install `tkinter` via Homebrew (`brew install python-tk`).
+
+### Browser Display Adapter
+
+Please see the [README for the `browser` display adapter](RGBMatrixEmulator/adapters/browser_adapter/README.md) for further information regarding its configuration and usage.
+
+### Raw Display Adapter
+
+If you prefer fine-grained control over the raw pixel data, such as to build integration testing or build your own UI on top of it, you can use the `raw` display adapter.
+
+Please see the [README for the `raw` display adapter](RGBMatrixEmulator/adapters/raw_adapter/README.md) for further information regarding its configuration and usage.
+
+### White Label Customization
+
+The emulator config allows you to customize icons and window text in simple one-off scripts. However, this needs to be done manually for each user since RGBME generates a new emulator config on first bootup. If you are packaging RGBME as a part of a larger project, you may wish to automatically configure the branding options for end users (i.e. add "white-label" customization).
+
+To do so, you can directly write to the `icon_path` and `emulator_text` options:
+
+```python
+from RGBMatrixEmulator import RGBMatrixOptions
+
+options = RGBMatrixOptions() # Fill out the options struct with user args
+
+# Set the title
+options.emulator_title = "White Label LED Matrix"
+
+# Pass the icon path as string
+options.icon_path = "path/to/your/icon.png"
+
+# A better option is to use relative paths:
+from pathlib import Path
+options.icon_path = (Path(__file__).parent / "path" / "to" / "your" / "icon.png").resolve()
+```
+
+## Screenshots
+
+<a href="assets/rotating-block.gif">
+  <img src="assets/rotating-block.gif" height="200" />
+</a>
+<a href="assets/mlb-led-scoreboard.png">
+  <img src="assets/mlb-led-scoreboard.png" height="200" />
+</a>
+<a href="assets/nhl-clock.png">
+  <img src="assets/nhl-clock.png" height="200" />
+</a>
+<a href="assets/circular-leds.png">
+  <img src="assets/circular-leds.png" height="200" />
+</a>
+<a href="assets/browser-adapter.gif">
+  <img src="assets/browser-adapter.gif" height="200" />
+</a>
+<a href="assets/mlb-led-scoreboard-final.png">
+  <img src="assets/mlb-led-scoreboard-final.png" height="200" />
+</a>
+
+## Samples
+
+See [Samples README](samples/README.md) for more information about running example scripts.
+
+## Known Issues
+
+- Calling draw functions on an instance of `RGBMatrix` is slow (i.e. `matrix.SetPixel`, `matrix.Fill`)
+  - Prefer using on a `Canvas` instance instead
+  - `rpi-rgb-led-matrix` uses a threaded implementation to handle single pixel draws with the `RGBMatrix` class, unfortunately `RGBMatrixEmulator` redraws the entire screen on each call
+  - NOTE: the implementation is accurate other than speed (you _can_ still drop `RGBMatrixEmulator` into a project that makes calls to the matrix object)
+  - <details>
+    <summary>Expand Example</summary>
+    
+    ```python
+    # SLOW
+    matrix = RGBMatrix(options = RGBMatrixOptions)
+
+    for y in matrix.height:
+      for x in matrix.width:
+        matrix.SetPixel(x, y, 255, 255, 255) # Redraws entire screen
+
+    # FAST
+    matrix = RGBMatrix(options = RGBMatrixOptions)
+    canvas = matrix.CreateFrameCanvas()
+
+    for y in matrix.height:
+      for x in matrix.width:
+        canvas.SetPixel(x, y, 255, 255, 255) # No redraw
+
+    matrix.SwapOnVsync(canvas) # Force screen refresh
+    ```
+  </details>
+- `--led-pixel-mapper` emulation differs from `rpi-rgb-led-matrix`. This is due to the assumption made by RGBME for an upright, rectangular emulated matrix. See [Multi-Panel Emulation](#multi-panel-emulation) for details.
+
+## Contributing
+
+### Pull Requests
+
+Before submitting a PR, please open an issue to help us track development. All development should be based off of the `main` branch and PRs should be squash merged. Releases are cut periodically and follow semantic versioning.
+
+Pull requests that fail builds will not be merged.
+
+### Installing Locally
+
+RGBME uses `uv` to manage dependencies.
+
+```sh
+uv sync --group dev
+
+# Example:
+#   To run a sample script:
+cd samples
+uv run python runtext.py
+```
+
+#### Running Tests
+
+```sh
+uv run python -m unittest discover -s test
+```
+
+#### Lint
+
+```sh
+uv run black .
+```
+
+## Contact
+
+Ty Porter
+
+tyler.b.porter@gmail.com
