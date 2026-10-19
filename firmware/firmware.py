@@ -37,6 +37,7 @@ canvas.SetImage(image.convert('RGB'))
 canvas = matrix.SwapOnVSync(canvas)
 
 # omg it works
+# now i need to make it work for gifs
 
 try:
     print("Press CTRL-C to stop.")
