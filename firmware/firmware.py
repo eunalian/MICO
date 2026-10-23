@@ -10,23 +10,61 @@ if sys.platform == "darwin":
     from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions
 else:
     from rgbmatrix import RGBMatrix, RGBMatrixOptions
+
 # 21.10.26: maybe i should make a class for every gif so that it may contain its own frames and stuff
 # bro i dont get it im so fucking sleepy :sob:
 # on second thought, maybe this is a bad idea, why make a class if the gif is already part of some other class
-gifs_list = []
+
+# 22.10.26: i am so sleepy but i think i need to like rubber ducky this thing
+# i need to iteratively load each gif listed in the system arguments into a class for gifs and then load each of their frames into matrix canvas thingymabob
+
+# 23.10.26: well how is the gif even processed in the original hzeller demo file?
+# 1: gif variable created, calls Image.open() on the first argument in sys.argv
+# 2: num_frames variable created, calls gif.n_frames to get the number of frames
+# 3: for loop that iterates through gif frames then .thumbnail() to make it smaller then yada yada yada append to frames array
+# the next problem to solve is how to switch between different gifs in the matrix canvas
+
+# i think i need to include a method that closes a gif, ran after processing is done?
+
+class gif:
+    def __init__(self, location, gif_index):
+        self.location = location
+        self.gif_index = gif_index
+        self.frames = self.process_frames()
+
+    # input a gif, return back an array of frames in self.frames
+    def process_frames(self):
+        frames = []
+        pregif = Image.open(self.location)
+
+        try:
+            self.num_frames = pregif.n_frames
+        except Exception:
+            sys.exit(f"{self.location} is not a gif")
+        
+        print(f"Preprocessing gif {self.location}, index {self.gif_index}.")
+        for frame_index in range(0, self.num_frames):
+            pregif.seek(frame_index)
+            # must copy the frame out of the gif, since thumbnail() modifies the image in-place
+            frame = pregif.copy()
+            frame.thumbnail((matrix.width, matrix.height), Image.LANCZOS)
+            frames.append(frame.convert("RGB"))
+
+        # close the gif after processing is done
+        pregif.close()
+        return frames
+        
+
+gif_object_list = []
 if len(sys.argv) < 2:
     sys.exit("Require a gif argument")
 else:
-    for i in range(sys.argv):
-        gifs_list.append(sys.argv)
+    # now i need to make a new gif object for each gif in the sysargv
+    for i in range(1, len(sys.argv)):
+        loop_gif = gif(sys.argv[i], i-1)
+        gif_object_list.append()
+        print(str(loop_gif.frames))
 
-
-gif = Image.open(gifs_list[1])
-
-try:
-    num_frames = gif.n_frames
-except Exception:
-    sys.exit("provided image is not a gif")
 
 
 # Configuration for the matrix
@@ -37,22 +75,7 @@ options.chain_length = 1
 options.hardware_mapping = 'regular'  # If you have an Adafruit HAT: 'adafruit-hat'
 
 matrix = RGBMatrix(options = options)
-
-# Preprocess the gifs frames into canvases to improve playback performance
-frames = []
 canvas = matrix.CreateFrameCanvas()
-print("Preprocessing gif, this may take a moment depending on the size of the gif...")
-for frame_index in range(0, num_frames):
-    gif.seek(frame_index)
-    # must copy the frame out of the gif, since thumbnail() modifies the image in-place
-    frame = gif.copy()
-    frame.thumbnail((matrix.width, matrix.height), Image.LANCZOS)
-    frames.append(frame.convert("RGB"))
-
-# Close the gif file to save memory now that we have copied out all of the frames
-gif.close()
-
-print("Completed Preprocessing, displaying gif")
 
 try:
     print("Press CTRL-C to stop.")
@@ -66,5 +89,6 @@ try:
             cur_frame = 0
         else:
             cur_frame += 1
+        time.sleep(0.2)
 except KeyboardInterrupt:
     sys.exit(0)
