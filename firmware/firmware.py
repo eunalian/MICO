@@ -26,6 +26,15 @@ else:
 
 # i think i need to include a method that closes a gif, ran after processing is done?
 
+# completely forgot that id need to move the options block before the class
+options = RGBMatrixOptions()
+options.rows = 32
+options.cols = 64
+options.chain_length = 1
+options.hardware_mapping = 'regular'  # If you have an Adafruit HAT: 'adafruit-hat'
+
+matrix = RGBMatrix(options = options)
+
 class gif:
     def __init__(self, location, gif_index):
         self.location = location
@@ -50,7 +59,7 @@ class gif:
             frame.thumbnail((matrix.width, matrix.height), Image.LANCZOS)
             frames.append(frame.convert("RGB"))
 
-        # close the gif after processing is done
+        # close the gif after processing is done to save memory
         pregif.close()
         return frames
         
@@ -61,20 +70,13 @@ if len(sys.argv) < 2:
 else:
     # now i need to make a new gif object for each gif in the sysargv
     for i in range(1, len(sys.argv)):
-        loop_gif = gif(sys.argv[i], i-1)
-        gif_object_list.append()
-        print(str(loop_gif.frames))
+        append = gif(sys.argv[i], i-1)
+        gif_object_list.append(append)
 
 
 
 # Configuration for the matrix
-options = RGBMatrixOptions()
-options.rows = 32
-options.cols = 64
-options.chain_length = 1
-options.hardware_mapping = 'regular'  # If you have an Adafruit HAT: 'adafruit-hat'
 
-matrix = RGBMatrix(options = options)
 canvas = matrix.CreateFrameCanvas()
 
 try:
