@@ -12,5 +12,5 @@ HUB75 display, 1, 32x64 with P4. NEEDS to be 256x128mm with plastic moutning at 
 2s BMS, 1, its for the battery, local store or aliexpress,2.29,,,https://ar.aliexpress.com/item/1005006982646883.html
 Buck converter 5A, 1, its for stepping the batteries voltage down, local store or aliexpress,4.39,,,https://ar.aliexpress.com/item/1005010524196954.html
 
-PD Trigger Module USB Type-C
-Power bank (USB C PD compatible)
+PD Trigger Module USB Type-C, 2, alternative and potentially more convenient power source that you should probably go for instead (use 1 for the pi and 1 for the hub75 screen), aliexpress,2.19,,,https://ar.aliexpress.com/item/1005008248138108.html
+Power bank (USB C PD compatible), 1, just find any one you have laying around tbh but maybe it should have low current charging mode, locally sourced, 29.99 ,,,https://www.anker.com/products/a1688?variant=46336176423062
