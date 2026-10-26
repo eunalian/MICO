@@ -27,7 +27,7 @@ else:
 
 # i think i need to include a method that closes a gif, ran after processing is done?
 
-# completely forgot that id need to move the options block before the class
+# completely forgot that id need to move the optionps block before the class
 # Configuration for the matrix
 options = RGBMatrixOptions()
 options.rows = 32
