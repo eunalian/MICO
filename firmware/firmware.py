@@ -27,11 +27,14 @@ else:
 # i think i need to include a method that closes a gif, ran after processing is done?
 
 # completely forgot that id need to move the options block before the class
+# Configuration for the matrix
 options = RGBMatrixOptions()
 options.rows = 32
 options.cols = 64
 options.chain_length = 1
 options.hardware_mapping = 'regular'  # If you have an Adafruit HAT: 'adafruit-hat'
+options.show_refresh_rate = True
+options.pixel_mapper_config = "Rotate:180"
 
 matrix = RGBMatrix(options = options)
 
