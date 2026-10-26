@@ -96,24 +96,29 @@ else:
         append = gif(sys.argv[i], i-1)
         gif_object_list.append(append)
 
-
-
-# Configuration for the matrix
+print(f"done processing gifs!!!! {str(gif_object_list)}")
 
 canvas = matrix.CreateFrameCanvas()
+
+# edit this to change later depending on keyboard presses!
+current_gif = gif_object_list[1]
 
 try:
     print("Press CTRL-C to stop.")
 
     # Infinitely loop through the gif
+    # oh lol its as easy as using the object attributes of the same name
+
     cur_frame = 0
     while(True):
-        canvas.SetImage(frames[cur_frame])
-        matrix.SwapOnVSync(canvas, framerate_fraction=10)
-        if cur_frame == num_frames - 1:
+        canvas.SetImage(current_gif.frames[cur_frame])
+
+        # i dont know how to set the frame rate lmao
+        matrix.SwapOnVSync(canvas, framerate_fraction=1)
+        if cur_frame == current_gif.num_frames - 1:
             cur_frame = 0
         else:
             cur_frame += 1
-        time.sleep(0.2)
+
 except KeyboardInterrupt:
     sys.exit(0)
