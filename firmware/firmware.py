@@ -4,6 +4,7 @@
 import time
 import sys
 from PIL import Image
+from inputs import devices
 # im stupid . i tried compiling the rgbmatrix library on my mac, this is the better method apparently
 
 if sys.platform == "darwin":
