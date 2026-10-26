@@ -41,8 +41,11 @@ matrix = RGBMatrix(options = options)
 class gif:
     def __init__(self, location, gif_index):
         self.location = location
+
+        # dude i lowk dont know if we even need the gif_index lmao
         self.gif_index = gif_index
         self.frames = self.process_frames()
+        self.fps = self.detect_fps()
 
     # input a gif, return back an array of frames in self.frames
     def process_frames(self):
@@ -65,7 +68,24 @@ class gif:
         # close the gif after processing is done to save memory
         pregif.close()
         return frames
+
+    def detect_fps(self):
+        # adapted from stackOverFlow lol
+        # Returns the average framerate of a PIL Image object
+        pregif = Image.open(self.location)
+        pregif.seek(0)
+        frames = duration = 0
+        while True:
+            try:
+                frames += 1
+                duration += pregif.info['duration']
+                pregif.seek(pregif.tell() + 1)
+            except EOFError:
+                return frames / duration * 1000
+        return None
+
         
+# MAIN:
 
 gif_object_list = []
 if len(sys.argv) < 2:
