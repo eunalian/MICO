@@ -63,7 +63,7 @@ class gif:
             pregif.seek(frame_index)
             # must copy the frame out of the gif, since thumbnail() modifies the image in-place
             frame = pregif.copy()
-            frame.thumbnail((matrix.width, matrix.height), Image.LANCZOS)
+            frame.thumbnail((matrix.width, matrix.height), Image.NEAREST)
             frames.append(frame.convert("RGB"))
 
         # close the gif after processing is done to save memory
@@ -145,6 +145,7 @@ try:
             cur_frame = 0
         else:
             cur_frame += 1
+        time.sleep(1.0/current_gif.fps)
 
 except KeyboardInterrupt:
     sys.exit(0)
