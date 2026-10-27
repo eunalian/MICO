@@ -4,7 +4,7 @@
 import time
 import sys
 from PIL import Image
-from inputs import devices
+from pynput import keyboard
 # im stupid . i tried compiling the rgbmatrix library on my mac, this is the better method apparently
 
 if sys.platform == "darwin":
@@ -102,10 +102,35 @@ print(f"done processing gifs!!!! {str(gif_object_list)}")
 canvas = matrix.CreateFrameCanvas()
 
 # edit this to change later depending on keyboard presses!
-current_gif = gif_object_list[1]
+current_gif = gif_object_list[0]
+
+# handle switching keys using keyboard F row
+def on_press(key):
+
+    # what the fuck is a global variable
+    global current_gif
+
+    #lowk got this from ai cause i dont know how this library works
+    # i had no idea what isinstance() is before now
+    if isinstance(key, keyboard.Key) and key.name.startswith("f") and key.name[1:].isdigit():
+        f_number = int(key.name[1:])
+        last_index = gif_object_list.index(current_gif)
+
+        try:
+            print(f"switched to gif index {f_number - 1}")
+            current_gif = gif_object_list[(f_number - 1)]
+            # set the current frame to 0
+            
+        except IndexError:
+            print(f"gif {f_number - 1} out of range")
+            current_gif = gif_object_list[last_index]
 
 try:
     print("Press CTRL-C to stop.")
+
+    # handle catching keyboard listener events
+    listener = keyboard.Listener(on_press=on_press)
+    listener.start()
 
     # Infinitely loop through the gif
     # oh lol its as easy as using the object attributes of the same name
