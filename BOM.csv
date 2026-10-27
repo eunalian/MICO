@@ -1,16 +1,23 @@
-Item, Quantity, Info, Source, Price, Subtotal, Total, Link
-Bambu Basic PETG, 2, 1268.66 g of filament used across all prints but just use any petg lmao, Bambu Labs, 10.91,,,https://us.store.bambulab.com/products/petg-basic
-Plastic mirror, 1, Used in the periscope but glass mirrors would work better for visual clarity, Local store or Aliexpress, 14.62,,,https://www.aliexpress.com/item/1005010568821272.html
-Tinted acrylic 200x300 cm, 1, Used to cover the front screen, Aliexpress most reliable,7.45,,,https://www.aliexpress.com/item/1005004925861639.html
-Magnet 13mm*3mm, 4, OPTIONAL: used for attaching the ears - use any magnet size by changing the CAD file (the weird size is just some fridge magnets i had on hand), local store or aliexpress,4.56,,,https://www.aliexpress.com/item/1005012515339088.html
-M3 Screw set, 1, Only screw size i had lol, aliexpress,12.25,,,https://www.aliexpress.com/item/1005007278965396.html
-M3 Brass Heat set insert set, 1, likewise, aliexpress,6.65,,,https://www.aliexpress.com/item/1005010425070502.html
-Raspberry Pi 3b+, 1, Any raspberry pi would work tbh, aliexpress,61.39,,,https://ar.aliexpress.com/item/1005003340999766.html
-HUB75 display, 1, 32x64 with P4. NEEDS to be 256x128mm with plastic moutning at the back, aliexpress, 23.69,,,https://ar.aliexpress.com/item/1005008479388445.html
-
-18650 cell, 4, its a battery. almost no one ships this free on aliexpress so just buy local, SUPER recommended to go to a local store (aliexpress less reliable, 6.48,,,https://ar.aliexpress.com/item/1005008772558033.html
-2s BMS, 1, its for the battery, local store or aliexpress,2.29,,,https://ar.aliexpress.com/item/1005006982646883.html
-Buck converter 5A, 1, its for stepping the batteries voltage down, local store or aliexpress,4.39,,,https://ar.aliexpress.com/item/1005010524196954.html
-
-PD Trigger Module USB Type-C, 2, alternative and potentially more convenient power source that you should probably go for instead (use 1 for the pi and 1 for the hub75 screen), aliexpress,2.19,,,https://ar.aliexpress.com/item/1005008248138108.html
-Power bank (USB C PD compatible), 1, just find any one you have laying around tbh but maybe it should have low current charging mode, locally sourced, 29.99 ,,,https://www.anker.com/products/a1688?variant=46336176423062
+Item, Quantity, Info, Source, Price (USD w/o shipping), Subtotal, Total, Link
+Bambu Basic PETG, 2, 1268.66 g of filament used across all prints but just use any petg lmao, Bambu Labs, 10.91,21.82,,https://us.store.bambulab.com/products/petg-basic
+Plastic mirror, 1, Used in the periscope but glass mirrors would work better for visual clarity, Local store or Aliexpress, 14.62,14.62,,https://www.aliexpress.com/item/1005010568821272.html
+Tinted acrylic 200x300 mm, 1, Used to cover the front screen, Aliexpress most reliable,7.45,7.45,,https://www.aliexpress.com/item/1005004925861639.html
+Magnet 13mm*3mm set, 1, OPTIONAL: used for attaching the ears - use any magnet size by changing the CAD file (the weird size is just some fridge magnets i had on hand), local store or aliexpress,4.56,4.56,,https://www.aliexpress.com/item/1005012515339088.html
+M3 Screw set, 1, Only screw size i had lol, aliexpress,12.25,12.25,,https://www.aliexpress.com/item/1005007278965396.html
+M3 Brass Heat set insert set, 1, likewise, aliexpress,6.65,6.65,,https://www.aliexpress.com/item/1005010425070502.html
+Raspberry Pi 3b+, 1, Any raspberry pi would work tbh, aliexpress,61.39,61.39,,https://ar.aliexpress.com/item/1005003340999766.html
+HUB75 display, 1, 32x64 with P4. NEEDS to be 256x128mm with plastic mounting at the back, aliexpress, 23.69,23.69,,https://ar.aliexpress.com/item/1005008479388445.html
+,,,,,,,
+18650 cell, 4, its a battery. almost no one ships this free on aliexpress so just buy local, SUPER recommended to go to a local store (aliexpress less reliable as no one ships batteries for free), 6.48,25.92,,https://ar.aliexpress.com/item/1005008772558033.html
+2s BMS, 1, its for the battery, local store or aliexpress,2.29,2.29,,https://ar.aliexpress.com/item/1005006982646883.html
+Buck converter 5A, 1, its for stepping the batteries voltage down, local store or aliexpress,4.39,4.39,,https://ar.aliexpress.com/item/1005010524196954.html
+,,,,,,,
+PD Trigger Module USB Type-C, 2, alternative and potentially more convenient power source that you should probably go for instead (use 1 for the pi and 1 for the hub75 screen), aliexpress,2.19,4.38,,https://ar.aliexpress.com/item/1005008248138108.html
+Power bank (USB C PD compatible), 1, just find any one you have laying around tbh but it should have low current charging mode, locally sourced, 29.99,29.99,,https://www.anker.com/products/a1688?variant=46336176423062
+,,,,,,,
+,,Cost of all other components:,,,152.43,,
+,,Using the power bank:,,,34.37,,
+,,Using the 18650 + BMS + Buck converter:,,,32.6,,
+,,Total cost using power bank:,,,186.8,,
+,,,,,,,
+,,,,,,,
