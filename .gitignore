@@ -1,2 +1,6 @@
 .DS_Store
 firmware/.venv
+emulator_config.json
+firmware/RGBMatrixEmulator
+rpi-rgb-led-matrix
+.wakatime-project
