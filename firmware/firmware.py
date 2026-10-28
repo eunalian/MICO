@@ -89,8 +89,12 @@ class gif:
 # MAIN:
 
 gif_object_list = []
+
 if len(sys.argv) < 2:
-    sys.exit("Require a gif argument")
+    print("using default gif list:")
+    for i in range(len(default_gif_list)):
+        append = gif(default_gif_list[i], i-1)
+        gif_object_list.append(append)
 else:
     # now i need to make a new gif object for each gif in the sysargv
     for i in range(1, len(sys.argv)):
