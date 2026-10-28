@@ -97,7 +97,7 @@ if len(sys.argv) < 2:
         gif_object_list.append(append)
 else:
     # now i need to make a new gif object for each gif in the sysargv
-    for i in range(1, len(sys.argv)):
+    for i in range(len(sys.argv)):
         append = gif(sys.argv[i], i-1)
         gif_object_list.append(append)
 
