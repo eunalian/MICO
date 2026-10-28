@@ -88,6 +88,8 @@ class gif:
         
 # MAIN:
 
+# dude i dont know why but the code always selects starting from index one so like ill just put nothing on the first index
+default_gif_list = ['face-art/neutral.gif', 'face-art/smile-blush.gif', 'face-art/blush.gif', 'face-art/angry.gif', 'face-art/closedsmile.gif', 'face-art/flowery.gif',]
 gif_object_list = []
 
 if len(sys.argv) < 2:
