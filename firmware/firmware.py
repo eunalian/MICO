@@ -120,7 +120,6 @@ def on_press(key):
     # i had no idea what isinstance() is before now
     if isinstance(key, keyboard.Key) and key.name.startswith("f") and key.name[1:].isdigit():
         f_number = int(key.name[1:])
-        last_index = gif_object_list.index(current_gif)
 
         try:
             print(f"switched to gif index {f_number - 1}")
@@ -129,7 +128,6 @@ def on_press(key):
             
         except IndexError:
             print(f"gif {f_number - 1} out of range")
-            current_gif = gif_object_list[last_index]
 
 try:
     print("Press CTRL-C to stop.")
