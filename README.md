@@ -24,7 +24,6 @@ I designed this as a project for Hack Club's [Stardance!](https://stardance.hack
 * add photos in readme.md (ill probably need to finish to take photos)
 * make demo video!!!
 
-
-Onshape link: https://cad.onshape.com/documents/f897ad7f1a3873b71de9b8c0/w/de1a01354596991039c58223/e/3f06bed91d87894ab371f5e0?renderMode=0&uiState=6ae22b3c28991499d052626f
+[View in Onshape](https://cad.onshape.com/documents/f897ad7f1a3873b71de9b8c0/w/de1a01354596991039c58223/e/3f06bed91d87894ab371f5e0?renderMode=0&uiState=6ae22b3c28991499d052626f)
 
 STL Print guide to be written soon
