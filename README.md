@@ -18,10 +18,11 @@ I designed this as a project for Hack Club's [Stardance!](https://stardance.hack
 
 ## To Do:
 * solder switch and bms and connect to RPI + Hub75 screen
-* make install.sh script in root folder for convenient installing into rpi
-* add photos in readme.md
-* make demo video!!!
 * cut bicycle helmet for comfortable wearing (comfort is optional)
+* edit colors in onshape back to intended colors
+* ~~make install.sh script in root folder for convenient installing into rpi~~ (i dont really know how to do this properly)
+* add photos in readme.md (ill probably need to finish to take photos)
+* make demo video!!!
 
 
 Onshape link: https://cad.onshape.com/documents/f897ad7f1a3873b71de9b8c0/w/de1a01354596991039c58223/e/3f06bed91d87894ab371f5e0?renderMode=0&uiState=6ae22b3c28991499d052626f
