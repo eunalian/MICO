@@ -68,13 +68,20 @@ import time
 import os
 import sys
 from PIL import Image
-from pynput import keyboard
+
+# dude i think i have to use evdev instead
 # im stupid . i tried compiling the rgbmatrix library on my mac, this is the better method apparently
 
 if sys.platform == "darwin":
     from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions
+    from pynput import keyboard
 else:
     from rgbmatrix import RGBMatrix, RGBMatrixOptions
+    import evdev
+    import threading
+    # it says event1 in my rpi's evtest but im not sure if its gonna be the same everywhere else!!!!!!!!! omg
+    device = evdev.InputDevice("/dev/input/event1")
+    
 
 # 21.10.26: maybe i should make a class for every gif so that it may contain its own frames and stuff
 # bro i dont get it im so fucking sleepy :sob:
@@ -170,7 +177,7 @@ if len(sys.argv) < 2:
 else:
     # now i need to make a new gif object for each gif in the sysargv
     for i in range(len(sys.argv)):
-        append = gif(sys.argv[i], i-1)
+        append = gif(sys.argv[1:], i-1)
         gif_object_list.append(append)
 
 print(f"done processing gifs!!!! {str(gif_object_list)}")
@@ -181,30 +188,69 @@ canvas = matrix.CreateFrameCanvas()
 current_gif = gif_object_list[0]
 
 # handle switching keys using keyboard F row
-def on_press(key):
+# on some BULLSHIT right now because last minute i have to change to evdev cause i realized pynput doesnt work on headless env
+if sys.platform == "darwin":
+    def on_press(key):
 
-    # what the fuck is a global variable
-    global current_gif
+        # what the fuck is a global variable
+        global current_gif, cur_frame
 
-    #lowk got this from ai cause i dont know how this library works
-    # i had no idea what isinstance() is before now
-    if isinstance(key, keyboard.Key) and key.name.startswith("f") and key.name[1:].isdigit():
-        f_number = int(key.name[1:])
+        #lowk got this from ai cause i dont know how this library works
+        # i had no idea what isinstance() is before now
+        if isinstance(key, keyboard.Key) and key.name.startswith("f") and key.name[1:].isdigit():
+            f_number = int(key.name[1:])
 
-        try:
-            print(f"switched to gif index {f_number - 1}")
-            current_gif = gif_object_list[(f_number - 1)]
-            # set the current frame to 0
-            
-        except IndexError:
-            print(f"gif {f_number - 1} out of range")
+            try:
+                print(f"switched to gif index {f_number - 1}")
+                current_gif = gif_object_list[(f_number - 1)]
+                # set the current frame to 0
+                
+            except IndexError:
+                print(f"gif {f_number - 1} out of range")
+else:
+    F_KEY_TO_GIF_INDEX = {
+    evdev.ecodes.KEY_F1: 0,
+    evdev.ecodes.KEY_F2: 1,
+    evdev.ecodes.KEY_F3: 2,
+    evdev.ecodes.KEY_F4: 3,
+    evdev.ecodes.KEY_F5: 4,
+    evdev.ecodes.KEY_F6: 5,
+    evdev.ecodes.KEY_F7: 6,
+    evdev.ecodes.KEY_F8: 7,
+    evdev.ecodes.KEY_F9: 8,
+    evdev.ecodes.KEY_F10: 9,
+    evdev.ecodes.KEY_F11: 10,
+    evdev.ecodes.KEY_F12: 11,
+    }
+
+    def keyboard_loop():
+        global current_gif, cur_frame
+        for event in device.read_loop():
+            if event.type == evdev.ecodes.EV_KEY:
+                gif_index = F_KEY_TO_GIF_INDEX.get(event.code)
+                try:
+                    print(f"switched to gif index {gif_index}")
+                    current_gif = gif_object_list[(gif_index)]
+                    # set the current frame to 0
+                    cur_frame = 0
+                except IndexError:
+                    print(f"gif {gif_index} out of range")
+
+
+
 
 try:
     print("Press CTRL-C to stop.")
 
     # handle catching keyboard listener events
-    listener = keyboard.Listener(on_press=on_press)
-    listener.start()
+    if sys.platform == "darwin":
+        listener = keyboard.Listener(on_press=on_press)
+        listener.start()
+    else:
+        thread = threading.Thread(target=keyboard_loop, daemon=True)
+        thread.start()
+
+
 
     # Infinitely loop through the gif
     # oh lol its as easy as using the object attributes of the same name
