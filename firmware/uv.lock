@@ -652,6 +652,7 @@ dependencies = [
     { name = "pyzmq" },
     { name = "referencing" },
     { name = "requests" },
+    { name = "rgbmatrix" },
     { name = "rgbmatrixemulator" },
     { name = "rpds-py" },
     { name = "six" },
@@ -720,6 +721,7 @@ requires-dist = [
     { name = "pyzmq", specifier = "==27.2.0" },
     { name = "referencing", specifier = "==0.37.0" },
     { name = "requests", specifier = "==2.34.2" },
+    { name = "rgbmatrix", directory = "../rpi-rgb-led-matrix" },
     { name = "rgbmatrixemulator", specifier = ">=0.20.0" },
     { name = "rpds-py", specifier = "==2026.9.1" },
     { name = "six", specifier = "==1.17.0" },
@@ -1279,6 +1281,11 @@ sdist = { url = "https://files.pythonhosted.org/packages/ac/c3/e2a2b89f2d3e2179a
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a0/f4/c67b0b3f1b9245e8d266f0f112c500d50e5b4e83cb6f3b71b6528104182a/requests-2.34.2-py3-none-any.whl", hash = "sha256:2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0", size = 73075, upload-time = "2026-05-14T19:25:26.443Z" },
 ]
+
+[[package]]
+name = "rgbmatrix"
+version = "0.0.1+20260125"
+source = { directory = "../rpi-rgb-led-matrix" }
 
 [[package]]
 name = "rgbmatrixemulator"

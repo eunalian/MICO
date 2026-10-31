@@ -46,7 +46,7 @@ dependencies = [
     "pure-eval==0.2.4",
     "pygments==2.21.0",
     "pynput==1.8.2",
-    "pyobjc-core>=12.2.2; sys_platform == 'darwin'", 
+    "pyobjc-core>=12.2.2; sys_platform == 'darwin'",
     "pyobjc-framework-applicationservices>=12.2.2; sys_platform == 'darwin'",
     "pyobjc-framework-cocoa>=12.2.2; sys_platform == 'darwin'",
     "pyobjc-framework-coretext>=12.2.2; sys_platform == 'darwin'",
@@ -55,6 +55,7 @@ dependencies = [
     "pyzmq==27.2.0",
     "referencing==0.37.0",
     "requests==2.34.2",
+    "rgbmatrix",
     "rgbmatrixemulator>=0.20.0",
     "rpds-py==2026.9.1",
     "six==1.17.0",
@@ -70,3 +71,6 @@ dependencies = [
     "webencodings==0.6.1",
     "yarg==0.1.9",
 ]
+
+[tool.uv.sources]
+rgbmatrix = { path = "../rpi-rgb-led-matrix" }
