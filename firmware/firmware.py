@@ -159,6 +159,7 @@ for i in sorted(os.listdir("../face-art")):
     default_gif_list.append(os.path.join("../face-art", i))
 
 gif_object_list = []
+cur_frame = 0
 
 # decide to use default gif list, or to use system arguments
 if len(sys.argv) < 2:
@@ -208,7 +209,6 @@ try:
     # Infinitely loop through the gif
     # oh lol its as easy as using the object attributes of the same name
 
-    cur_frame = 0
     while(True):
         canvas.SetImage(current_gif.frames[cur_frame])
 
