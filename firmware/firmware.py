@@ -65,6 +65,7 @@
 
 #!/usr/bin/env python
 import time
+import os
 import sys
 from PIL import Image
 from pynput import keyboard
@@ -151,10 +152,15 @@ class gif:
         
 # MAIN:
 
-# dude i dont know why but the code always selects starting from index one so like ill just put nothing on the first index
-default_gif_list = ['face-art/neutral.gif', 'face-art/smile-blush.gif', 'face-art/blush.gif', 'face-art/angry.gif', 'face-art/closedsmile.gif', 'face-art/flowery.gif',]
+default_gif_list = []
+
+# this is prob better than hard coding everything
+for i in sorted(os.listdir("../face-art")):
+    default_gif_list.append(os.path.join("../face-art", i))
+
 gif_object_list = []
 
+# decide to use default gif list, or to use system arguments
 if len(sys.argv) < 2:
     print("using default gif list:")
     for i in range(len(default_gif_list)):
