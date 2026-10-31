@@ -164,7 +164,7 @@ else:
     def keyboard_loop():
         global current_gif, cur_frame
         for event in device.read_loop():
-            if event.type == evdev.ecodes.EV_KEY:
+            if event.type == evdev.ecodes.EV_KEY and event.code in F_KEY_TO_GIF_INDEX:
                 gif_index = F_KEY_TO_GIF_INDEX.get(event.code)
                 try:
                     print(f"switched to gif index {gif_index}")
@@ -187,6 +187,7 @@ try:
     else:
         thread = threading.Thread(target=keyboard_loop, daemon=True)
         thread.start()
+        print("listener thread started!!!")
 
 
 
