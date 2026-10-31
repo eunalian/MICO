@@ -16,6 +16,7 @@ dependencies = [
     "decorator==5.3.1",
     "defusedxml==0.7.1",
     "docopt==0.6.2",
+    "evdev>=2.0.0",
     "executing==2.3.0",
     "fastjsonschema==2.22.2",
     "idna==3.20",
