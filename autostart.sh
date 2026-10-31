@@ -7,9 +7,8 @@ Documentation=https://github.com/eunalian/MICO
 [Service]
 Type=simple
 WorkingDirectory=$(pwd)
-ExecStart=$(pwd)/dist/firmware/firmware
+ExecStart=$HOME/.local/bin/uv run --no-sync firmware.py
 Restart=always
-Environment=PYNPUT_BACKEND_KEYBOARD=uinput
 
 [Install]
 WantedBy=multi-user.target
