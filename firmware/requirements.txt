@@ -41,11 +41,6 @@ ptyprocess==0.7.0
 pure-eval==0.2.4
 pygments==2.21.0
 pynput==1.8.2
-pyobjc-core==12.2.2
-pyobjc-framework-applicationservices==12.2.2
-pyobjc-framework-cocoa==12.2.2
-pyobjc-framework-coretext==12.2.2
-pyobjc-framework-quartz==12.2.2
 python-dateutil==3.0.0
 pyzmq==27.2.0
 referencing==0.37.0
