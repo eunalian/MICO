@@ -1,6 +1,3 @@
-sudo apt install kbd
-sudo modprobe uinput
-
 echo "Adding systemd unit:"
 sudo tee /etc/systemd/system/mico.service << EOF
 [Unit]
