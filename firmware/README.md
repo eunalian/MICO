@@ -1,12 +1,15 @@
 # Notes for installing:
-1. Clone the git repo into your rpi:
+1. Clone the git repo into your rpi: (Use --recurse-submodules)
 ```bash
-git clone https://github.com/eunalian/MICO
+git clone --recurse-submodules https://github.com/eunalian/MICO
+sudo apt install kbd
+sudo modprobe uinput
 ```
-2. (Requires UV & pyinstaller) Compile `rpi-rgb-led-matrix` submodule then compile python script:
+
+2. (Requires uv & pyinstaller) Compile `rpi-rgb-led-matrix` submodule then compile python script:
 ```bash
 cd MICO/firmware
-uv add ../rpi-rgb-led-matrix
+uv sync
 pyinstaller firmware.py
 ```
 3. Create a systemd unit to start the script automatically:
