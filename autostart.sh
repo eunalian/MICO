@@ -10,7 +10,7 @@ Documentation=https://github.com/eunalian/MICO
 [Service]
 Type=simple
 WorkingDirectory=$(pwd)
-ExecStart=$(pwd)/firmware/dist/firmware
+ExecStart=$(pwd)/dist/firmware
 Restart=always
 Environment=PYNPUT_BACKEND_KEYBOARD=uinput
 
