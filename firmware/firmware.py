@@ -44,7 +44,7 @@ options.chain_length = 1
 options.hardware_mapping = 'regular'  # If you have an Adafruit HAT: 'adafruit-hat'
 options.show_refresh_rate = True
 options.pixel_mapper_config = "Rotate:180"
-options.drop_privaleges = False
+options.drop_privileges = False
 
 matrix = RGBMatrix(options = options)
 
