@@ -17,3 +17,9 @@ sudo systemctl enable --now mico.service
 ```
 
 its lowk better to run this on like dietpi or something but i dont really know 
+
+**Please change the evdev device listed in [firmware.py](firmware.py) (line 20) to your own input device!**
+
+Find your input device with the following:
+```bash
+ls -l /dev/input/by-id/
