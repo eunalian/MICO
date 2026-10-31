@@ -3,8 +3,7 @@
 A 3d printed, lightweight TV head, with periscopes for viewing, powered by HUB75 and Raspi!
 The name MICO comes from Fa**MICO**m, the original inspiration for the project's exterior design
 
-![]
-
+![tv on the chair. amazing](./photos/hero-gif.gif)
 
 Saw some projects like [2swap](https://github.com/autowattage/2swap) and [Minbitt's TV Head](https://www.youtube.com/watch?v=yEIA7uc1x5s) and was inspired to make my own... not knowing it would take three months of work and agony, and a missed convention
 
@@ -12,10 +11,14 @@ I learnt a LOT of Onshape (basically had to start from zero knowledge, you can s
 
 I designed this as a project for Hack Club's [Stardance!](https://stardance.hackclub.com/)
 
-### [View the demo video!]()
+-------------------
+----
+### [View the demo video! <----------------------- hello is this unmissable enough](https://eunalian.github.io/tvhead.html)
+---
+---
 
 ## CAD
-Everything is fitted using M3 screws, nuts, and heat set inserts. (magnets, as well as the bottom wedge and side grills are glued.) Wires are arranged around the perimiter of the inside space. A guide for wiring the HUB75 panel can be found [here](https://github.com/chrisgilldc/rpi-rgb-led-matrix-pybuild/blob/master/wiring.md).
+Everything is fitted using M3 screws, nuts, heat set inserts, and too much blue tack. (magnets, as well as the bottom wedge and side grills are glued.) Wires are arranged around the perimiter of the inside space. A guide for wiring the HUB75 panel can be found [here](https://github.com/chrisgilldc/rpi-rgb-led-matrix-pybuild/blob/master/wiring.md).
 
 ![A CAD screenshot of the TV head](photos/Onshape-screenshot.png)
 
