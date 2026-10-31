@@ -115,7 +115,7 @@ if len(sys.argv) < 2:
 else:
     # now i need to make a new gif object for each gif in the sysargv
     for i in range(len(sys.argv)):
-        append = gif(sys.argv[1:], i-1)
+        append = gif(sys.argv[i + 1], i)
         gif_object_list.append(append)
 
 print(f"done processing gifs!!!! {str(gif_object_list)}")
