@@ -17,7 +17,7 @@ else:
     import evdev
     import threading
     # it says event1 in my rpi's evtest but im not sure if its gonna be the same everywhere else!!!!!!!!! omg
-    device = evdev.InputDevice("/dev/input/event1")
+    device = evdev.InputDevice("/dev/input/by-id/usb-8BitDo_8BitDo_Retro_Keyboard_Receiver-if02-event-kbd")
     
 
 # 21.10.26: maybe i should make a class for every gif so that it may contain its own frames and stuff
