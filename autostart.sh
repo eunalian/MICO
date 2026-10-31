@@ -1,3 +1,6 @@
+REPO_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+FIRMWARE_DIR="$REPO_DIR/firmware"
+
 echo "Adding systemd unit:"
 sudo tee /etc/systemd/system/mico.service << EOF
 [Unit]
@@ -6,9 +9,10 @@ Documentation=https://github.com/eunalian/MICO
 
 [Service]
 Type=simple
-WorkingDirectory=$(pwd)
-ExecStart=$HOME/.local/bin/uv run --no-sync firmware.py
-Restart=always
+WorkingDirectory=$FIRMWARE_DIR
+ExecStart=$FIRMWARE_DIR/.venv/bin/python3 $FIRMWARE_DIR/firmware.py
+Restart=on-failure
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
