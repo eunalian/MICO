@@ -13,6 +13,7 @@ WorkingDirectory=$FIRMWARE_DIR
 ExecStart=$FIRMWARE_DIR/.venv/bin/python3 $FIRMWARE_DIR/firmware.py
 Restart=on-failure
 RestartSec=5
+TimeoutStartSec=90
 
 [Install]
 WantedBy=multi-user.target
