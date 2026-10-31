@@ -12,7 +12,7 @@ I learnt a LOT of Onshape (basically had to start from zero knowledge, you can s
 
 I designed this as a project for Hack Club's [Stardance!](https://stardance.hackclub.com/)
 
-### [View the demo!]()
+### [View the demo video!]()
 
 ## CAD
 Everything is fitted using M3 screws, nuts, and heat set inserts. (magnets, as well as the bottom wedge and side grills are glued.) Wires are arranged around the perimiter of the inside space. A guide for wiring the HUB75 panel can be found [here](https://github.com/chrisgilldc/rpi-rgb-led-matrix-pybuild/blob/master/wiring.md).
@@ -21,9 +21,9 @@ Everything is fitted using M3 screws, nuts, and heat set inserts. (magnets, as w
 
 ![An exploded view screenshot](photos/exploded-view.png)
 
+![A view of the internal wiring](photos/internal-wiring.jpeg)
+
 [View in Onshape :3](https://cad.onshape.com/documents/f897ad7f1a3873b71de9b8c0/w/de1a01354596991039c58223/e/3f06bed91d87894ab371f5e0?renderMode=0&uiState=6ae22b3c28991499d052626f)
-
-
 
 ## Features:
 * Mounted periscope to view out of
@@ -33,6 +33,12 @@ Everything is fitted using M3 screws, nuts, and heat set inserts. (magnets, as w
 * RPi 3b+ 
 * magnetic cat ears? :3
 
-### special thanks:
+## How it works:
+firmware.py accepts multiple file paths to gifs in its arguments. If no arguments are provided, gifs in [face-art](./face-art) are loaded instead. The PIL library processes each gif, returning a list of gif frames. This list is defined as an attribue of a gif object, namely `gif.frames`. The `rpi-rgb-led-matrix-pybuild` library then loads these frames as canvas buffers to display on the HUB75 screen. `evdev` is used to read keyboard inputs.
+
+## How to use it:
+After aseembly, SSH into the rpi then follow the [installation guide](firmware/README.md). Once the python script is running, press F1-F12 to switch between gifs.
+
+## Special thanks:
 * [@hzeller](https://github.com/hzeller) for his [rpi-rgb-led-matrix](https://github.com/hzeller/rpi-rgb-led-matrix) library!
-* [@chrisgilldc](https://github.com/chrisgilldc) for his [fork](https://github.com/chrisgilldc/rpi-rgb-led-matrix-pybuild) that fixes the broken rpi-rgb-led-matrix library...
+* [@chrisgilldc](https://github.com/chrisgilldc) for his [fork](https://github.com/chrisgilldc/rpi-rgb-led-matrix-pybuild) that fixes the broken rpi-rgb-led-matrix library python binding....
