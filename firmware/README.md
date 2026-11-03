@@ -4,7 +4,7 @@
 git clone --recurse-submodules https://github.com/eunalian/MICO
 ```
 
-2. (Requires uv & pyinstaller) Compile `rpi-rgb-led-matrix` submodule then compile python script:
+2. (Requires uv & pyinstaller) Compile `rpi-rgb-led-matrix` submodule then install the python modules with uv sync:
 ```bash
 cd MICO/firmware
 uv sync
