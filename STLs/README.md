@@ -1,4 +1,5 @@
 # Guide for printing:
+**Note: The total calculated filament usage is 1268.66 g**
 ![All models view](screenshots/image-3.png)
 
 Most of the time, you can get away with 2-3% infill. Honeycomb pattern recommended, as gyroid infill can suffer from large internal overhangs.
@@ -20,4 +21,4 @@ A generic .3mf file can be found at STLs/MICO.3mf, as well as a generic .step fi
 * The front bezel pilot holes for heat set inserts may not print properly, if infill percentage is set too low.
 * The front bezel is too heavy.
 
-happy printing :3 **The total measured filament usage is 1268.66 g**
+happy printing :3 
